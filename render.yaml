@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: awit-at-alamat
+    runtime: static
+    buildCommand: echo "static site, no build"
+    staticPublishPath: .
+    headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=604800

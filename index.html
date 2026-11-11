@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Awit at Alamat · Myths, stories and music of the Davao Region</title>
+  <meta name="description" content="An e-magazine comparing the myths, stories and music of the Ata Manobo, Bagobo-Tagabawa, Mandaya, Mansaka and Obo Manuvu of the Davao Region.">
+  <meta name="theme-color" content="#15221E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/hero.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar" id="topbar">
+    <a class="topbar__mark" href="#cover">Awit at Alamat</a>
+    <nav class="topbar__nav" aria-label="Sections">
+      <button class="topbar__toggle" id="menuToggle" aria-expanded="false" aria-controls="menu">Contents</button>
+      <div class="menu" id="menu" hidden>
+        <ol class="menu__list" id="menuList"></ol>
+      </div>
+    </nav>
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  </header>
+
+  <main id="main">
+    <!-- COVER -->
+    <section class="cover" id="cover" aria-labelledby="coverTitle">
+      <div class="cover__bg" aria-hidden="true"><img src="assets/img/hero.svg" alt="" width="1600" height="1000"></div>
+      <div class="cover__inner">
+        <p class="cover__issue" id="coverIssue"></p>
+        <h1 class="cover__title" id="coverTitle"><span class="cover__line">Awit</span> <span class="cover__line">at Alamat</span></h1>
+        <p class="cover__sub" id="coverSub"></p>
+        <div class="cover__credits">
+          <p>Edited by</p>
+          <ul id="coverGroup"></ul>
+          <p id="coverClass"></p>
+        </div>
+      </div>
+      <a class="cover__cue" href="#introduction"><span>Scroll to begin</span><i aria-hidden="true"></i></a>
+    </section>
+
+    <!-- INTRODUCTION -->
+    <section class="intro" id="introduction" aria-labelledby="introTitle">
+      <div class="wrap intro__grid">
+        <h2 class="intro__title" id="introTitle">Five peoples, five homelands</h2>
+        <p class="intro__lead" id="introLead"></p>
+        <div class="intro__body" id="introBody"></div>
+        <figure class="intro__map" aria-labelledby="mapCap">
+          <div id="regionMap"></div>
+          <figcaption id="mapCap">Where the five communities live. A schematic, not to scale: positions are approximate.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- COMMUNITY SELECTOR -->
+    <section class="selector" id="communities" aria-labelledby="selTitle">
+      <h2 class="visually-hidden" id="selTitle">Choose a community</h2>
+      <a class="skip skip--inline" href="#chapters">Skip the community selector</a>
+      <div class="selector__stage" id="selStage">
+        <div class="selector__visual" id="selVisual" aria-hidden="true"></div>
+        <div class="selector__shade" aria-hidden="true"></div>
+
+        <div class="selector__track-wrap">
+          <div class="selector__track" id="selTrack" role="tablist" aria-label="Communities"></div>
+        </div>
+
+        <div class="selector__panel" id="selPanel" role="tabpanel" aria-live="polite"></div>
+
+        <div class="selector__controls">
+          <button class="ctrl" id="selPrev" aria-label="Previous community">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <p class="selector__count" id="selCount" aria-hidden="true"></p>
+          <button class="ctrl" id="selNext" aria-label="Next community">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <p class="selector__hint" id="selHint">Scroll, swipe or use the arrow keys to move between communities.</p>
+      </div>
+    </section>
+
+    <!-- CHAPTERS (rendered from js/data.js) -->
+    <div id="chapters"></div>
+
+    <!-- COMPARATIVE ANALYSIS -->
+    <section class="compare" id="comparison" aria-labelledby="cmpTitle">
+      <div class="wrap">
+        <header class="part-head">
+          <p class="part-head__part">Part three</p>
+          <h2 id="cmpTitle">Side by side</h2>
+          <p class="part-head__lead" id="cmpIntro"></p>
+        </header>
+
+        <div class="matrix" id="matrix">
+          <div class="matrix__tools" role="group" aria-label="Highlight a community">
+            <span class="matrix__label" id="hlLabel">Highlight</span>
+            <div class="chips" id="matrixChips"></div>
+          </div>
+          <div class="matrix__scroll" tabindex="0" aria-label="Comparison table, scrolls sideways on small screens">
+            <table class="matrix__table" id="matrixTable"></table>
+          </div>
+          <p class="matrix__note">"Not found in our sources" means we could not verify it, not that the community lacks it.</p>
+        </div>
+
+        <div class="contrast">
+          <div class="contrast__col">
+            <h3>What they share</h3>
+            <div id="similarities"></div>
+          </div>
+          <div class="contrast__col">
+            <h3>Where they differ</h3>
+            <div id="differences"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIGNIFICANCE -->
+    <section class="signif" id="significance" aria-labelledby="sigTitle">
+      <div class="wrap">
+        <header class="part-head part-head--light">
+          <p class="part-head__part">Part four</p>
+          <h2 id="sigTitle">Why the stories and songs matter</h2>
+        </header>
+        <div class="signif__grid" id="sigGrid"></div>
+      </div>
+    </section>
+
+    <!-- CONCLUSION -->
+    <section class="conclusion" id="conclusion" aria-labelledby="conTitle">
+      <div class="wrap conclusion__inner">
+        <h2 id="conTitle">What we learned</h2>
+        <div id="conBody"></div>
+      </div>
+    </section>
+
+    <!-- REFERENCES & RESPECT -->
+    <section class="refs" id="references" aria-labelledby="refTitle">
+      <div class="wrap refs__grid">
+        <div>
+          <h2 id="refTitle">References</h2>
+          <p class="refs__key">Sources are marked by kind, so readers can weigh them:
+            <span class="tier tier--primary">community or field source</span>
+            <span class="tier tier--scholarly">scholarly</span>
+            <span class="tier tier--institutional">institutional</span>
+            <span class="tier tier--secondary">secondary, use with care</span>
+            <span class="tier tier--unread">recommended, not yet consulted</span>
+          </p>
+          <ol class="refs__list" id="refList"></ol>
+        </div>
+        <aside class="refs__side">
+          <h3>Cultural respect</h3>
+          <ul id="protocol"></ul>
+          <h3>Acknowledgments</h3>
+          <p id="acks"></p>
+          <h3>About this issue</h3>
+          <p id="colophon"></p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Awit at Alamat. Illustrations are original. Stories belong to their communities.</p>
+    <a href="#cover">Back to the cover</a>
+  </footer>
+
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/community.js" defer></script>
+  <script src="js/scroll.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
