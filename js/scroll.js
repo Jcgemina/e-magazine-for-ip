@@ -1,10 +1,5 @@
 /* =====================================================================
-   scroll.js — scroll-driven behaviour (GSAP + ScrollTrigger)
-   - Cover entrance and parallax
-   - Pinned horizontal community selector, driven by vertical scroll
-   - Chapter opener reveals, reading progress
-   Falls back to a static, click-driven selector when the visitor
-   prefers reduced motion or GSAP fails to load.
+   scroll.js — cover slideshow, community selector and scroll-driven reveals
    ===================================================================== */
 (function () {
   "use strict";
@@ -15,14 +10,16 @@
   const Selector = {
     n: 0,
     active: -1,
-    st: null,
-    isStatic: false,
+    isStatic: true,
     reduced: false,
     names: [],
     imgs: [],
     panel: null,
     track: null,
-    xTo: null,
+    trackWrap: null,
+    trackFrame: 0,
+    trackResizeObserver: null,
+    trackWidth: 0,
 
     init({ reduced }) {
       const D = window.EMAG;
@@ -32,80 +29,59 @@
       this.imgs = $$(".sel-img");
       this.panel = $("#selPanel");
       this.track = $("#selTrack");
-      const hasGsap = !!(window.gsap && window.ScrollTrigger);
-      this.isStatic = reduced || !hasGsap;
+      this.trackWrap = this.track.parentElement;
+      this.isStatic = true;
 
+      $("#communities").classList.add("is-static");
       this.setActive(0, true);
       this.bindControls();
-
-      if (this.isStatic) {
-        $("#communities").classList.add("is-static");
-        $("#selHint").textContent = "Choose a community with the names, the arrow buttons or the arrow keys.";
-        return;
-      }
-      this.buildPin();
+      $("#selHint").textContent = "Choose a community with the names, the arrow buttons or the arrow keys.";
     },
 
-    // Where the active name should sit, measured from the viewport's left edge.
     anchorX() {
       const w = window.innerWidth;
       return w < 768 ? 20 : Math.min(w * 0.22, 320);
     },
 
-    // Track offset for a fractional position (e.g. 1.4 = between items 1 and 2).
-    offsetFor(pos) {
-      const a = Math.floor(pos), b = Math.min(this.n - 1, a + 1), t = pos - a;
-      const la = this.names[a].offsetLeft, lb = this.names[b].offsetLeft;
-      return -(la + (lb - la) * t) + this.anchorX();
+    targetScrollLeft(i) {
+      const wrapperRect = this.trackWrap.getBoundingClientRect();
+      const nameRect = this.names[i].getBoundingClientRect();
+      return Math.max(0, Math.min(
+        this.trackWrap.scrollWidth - this.trackWrap.clientWidth,
+        nameRect.left - wrapperRect.left + this.trackWrap.scrollLeft - this.anchorX()
+      ));
     },
 
-    buildPin() {
-      const gsap = window.gsap;
-      this.xTo = gsap.quickTo(this.track, "x", { duration: 0.55, ease: "power3.out" });
-      gsap.set(this.track, { x: this.offsetFor(0) });
+    moveTrack(i, immediate = false) {
+      window.cancelAnimationFrame(this.trackFrame);
+      if (immediate || this.reduced) {
+        this.trackWrap.scrollLeft = this.targetScrollLeft(i);
+        this.trackFrame = 0;
+        return;
+      }
 
-      const perItem = () => Math.max(window.innerHeight * 0.75, 420);
-      this.st = window.ScrollTrigger.create({
-        trigger: "#selStage",
-        start: "top top",
-        end: () => "+=" + perItem() * (this.n - 1),
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        snap: {
-          snapTo: 1 / (this.n - 1),
-          duration: { min: 0.2, max: 0.5 },
-          delay: 0.12,
-          ease: "power1.inOut"
-        },
-        onUpdate: (self) => {
-          const pos = self.progress * (this.n - 1);
-          this.pos = pos;
-          this.setActive(Math.round(pos));
-          this.xTo(this.offsetFor(pos));
-        },
-        onRefresh: (self) => {
-          gsap.set(this.track, { x: this.offsetFor(self.progress * (this.n - 1)) });
-        }
-      });
+      const start = this.trackWrap.scrollLeft;
+      const startedAt = performance.now();
+      const duration = 550;
+      const update = (now) => {
+        const target = this.targetScrollLeft(i);
+        const progress = Math.min(1, (now - startedAt) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        this.trackWrap.scrollLeft = start + (target - start) * eased;
+        if (progress < 1) this.trackFrame = window.requestAnimationFrame(update);
+        else this.trackFrame = 0;
+      };
+      this.trackFrame = window.requestAnimationFrame(update);
     },
 
-    // Scroll the page so that item i is active (pinned mode),
-    // or switch directly (static mode).
     goTo(i, { focus = false } = {}) {
       i = Math.max(0, Math.min(this.n - 1, i));
-      if (this.isStatic || !this.st) {
-        this.setActive(i);
-      } else {
-        const y = this.st.start + (this.st.end - this.st.start) * (i / (this.n - 1));
-        window.scrollTo({ top: Math.round(y), behavior: this.reduced ? "auto" : "smooth" });
-      }
+      this.setActive(i);
       if (focus) this.names[i].focus({ preventScroll: true });
     },
 
     setActive(i, immediate = false) {
       if (i === this.active) return;
-      const prev = this.active;
       this.active = i;
       const gsap = window.gsap;
       const D = window.EMAG;
@@ -117,65 +93,42 @@
       });
 
       // Images
-      this.imgs.forEach((f, j) => {
-        const on = j === i;
-        if (gsap && !this.reduced && !immediate) {
-          if (on) {
-            gsap.fromTo(f, { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.9, ease: "power2.out", overwrite: true });
-          } else if (j === prev) {
-            gsap.to(f, { opacity: 0, duration: 0.9, ease: "power2.out", overwrite: true });
-          } else {
-            gsap.set(f, { opacity: 0 });
-          }
-        } else {
-          f.style.opacity = on ? 1 : 0;
-        }
-      });
+      this.imgs.forEach((f, j) => f.classList.toggle("is-active", j === i));
 
       // Text panel
       const html = window.EMAGRender.selectorPanelHTML(i);
-      if (gsap && !this.reduced && !immediate && this.panel.firstElementChild) {
+      this.panel.innerHTML = html;
+      if (gsap && !this.reduced && !immediate) {
         gsap.killTweensOf(this.panel);
-        gsap.to(this.panel, {
-          opacity: 0, y: -10, duration: 0.18, ease: "power1.in",
-          onComplete: () => {
-            this.panel.innerHTML = html;
-            gsap.fromTo(this.panel, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" });
-            gsap.from(this.panel.querySelectorAll(".sel-panel__inner > *"), { opacity: 0, y: 10, stagger: 0.05, duration: 0.4, ease: "power2.out" });
-          }
-        });
-      } else {
-        this.panel.innerHTML = html;
+        gsap.from(this.panel, { y: 10, duration: 0.45, ease: "power2.out", overwrite: true });
       }
       this.panel.setAttribute("aria-labelledby", this.names[i].id);
-
-      // Active name grows (CSS font-size transition), so keep re-aiming the track while it does.
-      if (this.xTo && !immediate) this.followResize();
 
       $("#selCount").textContent = `${i + 1} / ${this.n}`;
       $("#selPrev").disabled = i === 0;
       $("#selNext").disabled = i === this.n - 1;
 
-      // Static mode: keep the active name in view inside the scrollable track
-      if (this.isStatic && !immediate) {
-        this.names[i].scrollIntoView({ block: "nearest", inline: "center", behavior: "auto" });
-      }
+      if (this.isStatic) this.moveTrack(i, immediate);
       document.dispatchEvent(new CustomEvent("emag:community", { detail: { index: i, id: D.communities[i].id } }));
-    },
-
-    followResize() {
-      const until = performance.now() + 650;
-      const step = () => {
-        this.xTo(this.offsetFor(this.pos || 0));
-        if (performance.now() < until) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
     },
 
     bindControls() {
       $("#selPrev").addEventListener("click", () => this.goTo(this.active - 1));
       $("#selNext").addEventListener("click", () => this.goTo(this.active + 1));
       this.names.forEach((b, j) => b.addEventListener("click", () => this.goTo(j)));
+      window.addEventListener("resize", () => this.moveTrack(this.active, true));
+      if ("ResizeObserver" in window) {
+        this.trackResizeObserver = new ResizeObserver((entries) => {
+          const width = entries[0].contentRect.width;
+          if (width === this.trackWidth) return;
+          this.trackWidth = width;
+          if (this.active >= 0) this.moveTrack(this.active, true);
+        });
+        this.trackResizeObserver.observe(this.trackWrap);
+      }
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden && this.active >= 0) this.moveTrack(this.active, true);
+      });
       this.track.addEventListener("keydown", (e) => {
         const map = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
         let target = null;
@@ -186,6 +139,65 @@
         e.preventDefault();
         this.goTo(target, { focus: true });
       });
+      this.track.addEventListener("transitionend", (e) => {
+        if (e.propertyName === "font-size" && e.target.getAttribute("aria-selected") === "true") {
+          this.moveTrack(this.active, true);
+        }
+      });
+    }
+  };
+
+  const CoverSlideshow = {
+    index: 0,
+    slides: [],
+    timer: null,
+    paused: false,
+
+    init() {
+      this.slides = $$(".cover__slide");
+      if (this.slides.length < 2) return;
+
+      this.paused = false;
+      $("#coverPhotoPrev").addEventListener("click", () => this.move(-1));
+      $("#coverPhotoNext").addEventListener("click", () => this.move(1));
+      $("#coverPhotoToggle").addEventListener("click", () => {
+        this.paused = !this.paused;
+        this.updateToggle();
+        this.schedule();
+      });
+
+      document.addEventListener("visibilitychange", () => this.schedule());
+      this.updateToggle();
+      this.schedule();
+    },
+
+    move(amount) {
+      this.show(this.index + amount, true);
+      this.schedule();
+    },
+
+    show(index, announce = false) {
+      this.index = (index + this.slides.length) % this.slides.length;
+      this.slides.forEach((slide, i) => slide.classList.toggle("is-active", i === this.index));
+      const name = window.EMAG.communities[this.index].selectorName;
+      $("#coverPhotoName").textContent = name;
+      if (announce) $("#coverPhotoStatus").textContent = `Photo: ${name}`;
+    },
+
+    updateToggle() {
+      const button = $("#coverPhotoToggle");
+      button.textContent = this.paused ? "Play" : "Pause";
+      button.setAttribute("aria-label", this.paused ? "Resume photo rotation" : "Pause photo rotation");
+    },
+
+    schedule() {
+      window.clearTimeout(this.timer);
+      this.timer = null;
+      if (this.paused || document.hidden) return;
+      this.timer = window.setTimeout(() => {
+        this.show(this.index + 1);
+        this.schedule();
+      }, 4000);
     }
   };
 
@@ -193,7 +205,7 @@
     const gsap = window.gsap;
     if (!gsap || reduced) return;
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    tl.from(".cover__bg img", { scale: 1.08, duration: 2.2, ease: "power2.out" }, 0)
+    tl.from(".cover__slide.is-active img", { scale: 1.08, duration: 2.2, ease: "power2.out" }, 0)
       .from(".cover__line", { yPercent: 105, duration: 1.1, stagger: 0.14 }, 0.15)
       .from([".cover__issue", ".cover__sub", ".cover__credits", ".cover__cue"], { opacity: 0, y: 16, duration: 0.8, stagger: 0.08 }, 0.7);
 
@@ -203,20 +215,129 @@
     });
   }
 
-  function chapterReveals(reduced) {
-    const gsap = window.gsap;
-    if (!gsap || reduced) return;
-    $$(".ch-open").forEach((el) => {
-      const img = el.querySelector("img");
-      gsap.fromTo(img, { scale: 1.12 }, {
-        scale: 1, ease: "none",
-        scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true }
-      });
-      gsap.from(el.querySelector(".ch-open__name"), {
-        yPercent: 30, opacity: 0, duration: 1, ease: "power3.out",
-        scrollTrigger: { trigger: el, start: "top 60%", once: true }
-      });
+  let chapterAnimations = [];
+  let chapterRefreshFrame = 0;
+
+  function clearChapterAnimations() {
+    chapterAnimations.forEach((animation) => {
+      if (animation.scrollTrigger) animation.scrollTrigger.kill();
+      animation.kill();
     });
+    chapterAnimations = [];
+  }
+
+  function chapterReveals(reduced) {
+    clearChapterAnimations();
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
+    if (!gsap || !ScrollTrigger || reduced) return;
+
+    const chapter = $(".chapter");
+    if (!chapter) return;
+    const index = chapter.dataset.index;
+    const opener = $(".ch-open", chapter);
+    const openerImage = $(".ch-open__media img", chapter);
+    const imageReveal = chapter.classList.contains("chapter--mandaya")
+      ? gsap.fromTo(openerImage, { clipPath: "inset(0 100% 0 0)", scale: 1.04 }, {
+          clipPath: "inset(0)", scale: 1, ease: "none",
+          scrollTrigger: { id: `chapter-reveal-image-${index}`, trigger: opener, start: "top bottom", end: "bottom top", scrub: true }
+        })
+      : gsap.fromTo(openerImage, { scale: 1.12 }, {
+          scale: 1, ease: "none",
+          scrollTrigger: { id: `chapter-reveal-image-${index}`, trigger: opener, start: "top bottom", end: "bottom top", scrub: true }
+        });
+    chapterAnimations.push(imageReveal);
+
+    const nameReveal = gsap.from($(".ch-open__name", chapter), {
+      yPercent: 30, opacity: 0, duration: 1, ease: "power3.out",
+      scrollTrigger: { id: `chapter-reveal-name-${index}`, trigger: opener, start: "top 60%", once: true }
+    });
+    chapterAnimations.push(nameReveal);
+
+    const story = $(".ch-stories", chapter);
+    const storyPath = $(".ch-stories__thread path", chapter);
+    if (story && storyPath) {
+      const length = storyPath.getTotalLength();
+      const storyReveal = gsap.fromTo(storyPath, {
+        strokeDasharray: length,
+        strokeDashoffset: length,
+        opacity: 0.25
+      }, {
+        strokeDashoffset: 0,
+        opacity: 0.8,
+        ease: "none",
+        scrollTrigger: { id: `chapter-reveal-story-${index}`, trigger: story, start: "top 82%", end: "top 35%", scrub: true }
+      });
+      chapterAnimations.push(storyReveal);
+    }
+
+    const music = $(".ch-music", chapter);
+    const melody = $(".ch-music__melody", chapter);
+    if (music && melody) {
+      const bird = $(".ch-music__bird", melody);
+      const notesLayer = $(".ch-music__notes", music);
+      const notesFloat = $(".ch-music__notes-float", notesLayer);
+      const melodyReveal = gsap.timeline({
+        scrollTrigger: { id: `chapter-reveal-melody-${index}`, trigger: music, start: "top 88%", end: "top 28%", scrub: true }
+      });
+      melodyReveal
+        .fromTo(melody, { xPercent: -110, rotation: -2, autoAlpha: 0 }, {
+          xPercent: 0, rotation: 0, autoAlpha: 0.65, duration: 0.32, ease: "none"
+        })
+        .to(melody, { xPercent: 0, rotation: 0, autoAlpha: 0.4, duration: 0.68, ease: "none" });
+      if (notesFloat) {
+        melodyReveal
+          .fromTo(notesFloat, {
+            x: -140, y: -8, autoAlpha: 0, transformOrigin: "50% 50%"
+          }, {
+            x: 520, y: 95, autoAlpha: 0.9, duration: 0.82, ease: "none"
+          }, 0.12)
+          .to(notesFloat, {
+            x: 560, autoAlpha: 0, duration: 0.06, ease: "none"
+          }, 0.94);
+      }
+      if (bird) {
+        melodyReveal
+          .fromTo(bird, {
+            x: -18, y: 14, rotation: -5, autoAlpha: 0, transformOrigin: "50% 50%"
+          }, {
+            x: 420, y: -4, rotation: 2, autoAlpha: 1, duration: 0.68, ease: "none"
+          }, 0.12)
+          .to(bird, {
+            x: 650, y: -15, autoAlpha: 0, duration: 0.32, ease: "none"
+          }, 0.68);
+      }
+      chapterAnimations.push(melodyReveal);
+
+      $$(".inst", music).forEach((item, instrumentIndex) => {
+        const instrument = $(".inst__icon svg", item);
+        if (!instrument) return;
+        const instrumentReveal = gsap.fromTo(instrument, {
+          x: -64, rotation: -7, autoAlpha: 0
+        }, {
+          x: 0, rotation: 0, autoAlpha: 1, ease: "none",
+          scrollTrigger: {
+            id: `chapter-reveal-instrument-${index}-${instrumentIndex}`,
+            trigger: item, start: "top 88%", end: "top 62%", scrub: true
+          }
+        });
+        chapterAnimations.push(instrumentReveal);
+      });
+    }
+
+    const textileImage = $(".story__weave img", chapter);
+    if (textileImage) {
+      const textileFigure = textileImage.closest(".story__weave");
+      const textileReveal = gsap.timeline({
+        scrollTrigger: { id: `chapter-reveal-weave-${index}`, trigger: textileFigure, start: "top 86%", end: "bottom 12%", scrub: true }
+      });
+      textileReveal
+        .fromTo(textileImage, { clipPath: "inset(0 100% 0 0)", opacity: 0.7 }, {
+          clipPath: "inset(0)", opacity: 1, duration: 0.7, ease: "none"
+        })
+        .to(textileImage, { clipPath: "inset(0 0 0 100%)", opacity: 0, duration: 0.3, ease: "none" });
+      chapterAnimations.push(textileReveal);
+    }
   }
 
   function progress(reduced) {
@@ -238,14 +359,28 @@
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (window.gsap && window.ScrollTrigger) window.gsap.registerPlugin(window.ScrollTrigger);
       coverIntro(reduced);
+      CoverSlideshow.init();
+      document.addEventListener("emag:chapter-rendered", () => {
+        chapterReveals(reduced);
+        if (window.ScrollTrigger) {
+          window.cancelAnimationFrame(chapterRefreshFrame);
+          chapterRefreshFrame = window.requestAnimationFrame(() => {
+            chapterRefreshFrame = 0;
+            window.ScrollTrigger.refresh();
+          });
+        }
+      });
       Selector.init({ reduced });
-      chapterReveals(reduced);
       progress(reduced);
 
       if (window.ScrollTrigger) {
-        // Fonts change text widths; re-measure once they arrive.
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => window.ScrollTrigger.refresh());
         window.addEventListener("load", () => window.ScrollTrigger.refresh());
+      }
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          if (Selector.active >= 0) Selector.moveTrack(Selector.active);
+          if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+        });
       }
     }
   };

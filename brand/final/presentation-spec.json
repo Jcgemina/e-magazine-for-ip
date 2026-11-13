@@ -1,0 +1,40 @@
+{
+  "brand": "Awit at Alamat",
+  "tagline": "Myths, stories and music of the Davao Region",
+  "brief": "An editorial e-magazine featuring Ata Manobo, Bagobo-Tagabawa, Mandaya, Mansaka and Obo Manuvu. The identity should make the five distinct homelands visible without suggesting a single shared culture or borrowing community-specific symbols.",
+  "adjectives": [
+    "editorial",
+    "distinct",
+    "grounded",
+    "welcoming"
+  ],
+  "criteria": "A distinctive, simple mark that stays readable at small sizes, works in one colour, and respects the distinct identities of the five featured communities.",
+  "industry": "education",
+  "nav": [
+    "Communities",
+    "Stories",
+    "References"
+  ],
+  "brand_color": "#15221E",
+  "greyscale": false,
+  "final": true,
+  "round": 3,
+  "concepts": [
+    {
+      "name": "Five Homelands",
+      "symbol": "awit-at-alamat-symbol.svg",
+      "lockup": "awit-at-alamat-horizontal.svg",
+      "stacked": "awit-at-alamat-stacked.svg",
+      "avatar": "../../assets/brand/awit-at-alamat-app-icon.svg",
+      "lockup_on_dark": "awit-at-alamat-horizontal-dark.svg",
+      "symbol_on_tile": "../../assets/brand/awit-at-alamat-mono-e6c547.svg",
+      "idea": "Five independent contour strokes evoke the five featured homelands.",
+      "rationale": [
+        "Uses the exact smooth-wave direction selected by the user.",
+        "The separate strokes avoid merging the communities into one cultural symbol.",
+        "Forest Night and Turmeric carry the site's existing visual identity into the logo."
+      ]
+    }
+  ],
+  "recommendation": "Five Homelands is the selected direction. Its simple, separate strokes work in monochrome and extend naturally into the magazine's existing palette."
+}

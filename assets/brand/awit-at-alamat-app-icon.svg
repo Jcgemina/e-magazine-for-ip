@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><title>Awit at Alamat</title><rect width="256" height="256" rx="57.6" fill="#15221E"/><g transform="translate(13.57 3.02) scale(0.894)" fill="#FAFCF8">
+  <title id="title">Awit at Alamat icon</title>
+  <desc id="description">A simplified five-contour symbol for small sizes.</desc>
+  <g fill="none" stroke="#FAFCF8" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M76 53c13-8 25-8 37-2s24 8 37 2 22-6 30-2"/>
+    <path d="M58 95c16-8 31-9 46-3s26 10 43 4 31-10 51-6"/>
+    <path d="M42 138c18-9 35-12 52-6s31 12 50 6 38-12 70-7"/>
+    <path d="M58 180c19-8 34-10 48-4s25 11 43 5 29-11 49-6"/>
+    <path d="M79 221c17-7 30-10 43-4s24 10 39 5 19-7 29-4"/>
+  </g>
+</g></svg>

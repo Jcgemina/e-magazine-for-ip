@@ -1,20 +1,3 @@
-/* =====================================================================
-   AWIT AT ALAMAT — content data
-   ---------------------------------------------------------------------
-   Every piece of text in the e-magazine lives here, so you can edit
-   content without touching the interaction code.
-
-   Conventions
-   - refs: ["key", ...] points to an entry in EMAG.references.
-   - Text marked placeholder: true is shown with a "To verify" label.
-   - Retellings are written in our own words from the cited sources.
-     They are summaries, not transcriptions of sacred texts.
-   - To use a real photograph, replace cover.src with your file in
-     assets/img/ and set cover.isIllustration to false. Only use photos
-     you took with permission, or that are licensed for reuse, and fill
-     in cover.credit.
-   ===================================================================== */
-
 window.EMAG = {
   meta: {
     title: "Awit at Alamat",
@@ -22,9 +5,13 @@ window.EMAG = {
       "Myths, stories and music of five Indigenous cultural communities of the Davao Region",
     issue: "E-magazine · Davao Region",
     // Edit these names. They appear on the cover and in the colophon.
-    group: ["Member Name 1", "Member Name 2", "Member Name 3", "Member Name 4", "Member Name 5"],
-    section: "Grade & Section",
-    teacher: "Subject Teacher",
+    group: ["Jhon Carlo Gemina", 
+            "Gennah Mae Lacandula", 
+            "Realyn Lumaad", 
+            "Gabrielle Sebastien Abela", 
+            "Adrian Florida"],
+    section: "BSIT - 3rd Year",
+    teacher: "Esmerinkle",
     year: "2026"
   },
 
@@ -49,10 +36,19 @@ window.EMAG = {
       location: "Talaingod and Kapalong, Davao del Norte, in the Pantaron range",
       landmark: "Mount Pantaron",
       cover: {
-        src: "assets/img/ata.svg",
-        alt: "Illustration of layered forested ridges of the Pantaron range at dusk, with river valleys between them",
-        credit: "Illustration by the editors. Replace with a community-approved photograph.",
-        isIllustration: true
+        src: "assets/img/photos/ata-manobo.jpg",
+        alt: "Ata women from Barangay Tapak manually mill rice at the Kadayawan Cultural Village in Davao City.",
+        fit: "contain",
+        credit: {
+          title: "ATA Tribe",
+          creator: "Ranieljosecastaneda",
+          source: "Wikimedia Commons",
+          pageUrl: "https://commons.wikimedia.org/wiki/File:ATA_Tribe.jpg",
+          originalUrl: "https://upload.wikimedia.org/wikipedia/commons/4/43/ATA_Tribe.jpg",
+          license: "CC BY-SA 4.0",
+          licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        isIllustration: false
       },
       teaser:
         "Highland people of the Pantaron range, where epics are remembered by river and a sacred rock keeps the soul of a datu.",
@@ -171,7 +167,10 @@ window.EMAG = {
           refs: ["ragragio2025", "pagusara2014"]
         },
         toVerify: [
-          "Titles and summaries of specific Ata Manobo epics, with the permission of the chanters' families.",
+          {
+            text: "Ragragio and Paluga (2025) report that Pantaron Manobo elders pass historical knowledge on through epics and hero stories; specific Ata titles or plot summaries, and family permission to share them, remain unverified.",
+            refs: ["ragragio2025"]
+          },
           "Recordings of kuglung or saluray playing that the community has cleared for public use."
         ]
       }
@@ -186,10 +185,19 @@ window.EMAG = {
       location: "Eastern slopes of Mount Apo, including Toril, Davao City",
       landmark: "Mount Apo (Apo Sandawa)",
       cover: {
-        src: "assets/img/tagabawa.svg",
-        alt: "Illustration of the broad cone of Mount Apo above terraced foothills and the Davao Gulf",
-        credit: "Illustration by the editors. Replace with a community-approved photograph.",
-        isIllustration: true
+        src: "assets/img/photos/bagobo-tagabawa.jpg",
+        alt: "Bagobo-Tagabawa house display in Davao City, identified by a sign and a panel showing community members in traditional attire.",
+        fit: "cover",
+        credit: {
+          title: "Traditional House by the Bagobo Tagabawa Tribe",
+          creator: "MadayawDavao",
+          source: "Wikimedia Commons",
+          pageUrl: "https://commons.wikimedia.org/wiki/File:Traditional_House_by_the_Bagobo_Tagabawa_Tribe.jpg",
+          originalUrl: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Traditional_House_by_the_Bagobo_Tagabawa_Tribe.jpg",
+          license: "CC BY-SA 4.0",
+          licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        isIllustration: false
       },
       teaser:
         "People of Apo Sandawa, with a first couple on the mountain, a goddess who tends dead infants, and gongs hung in a pyramid.",
@@ -309,8 +317,14 @@ window.EMAG = {
           refs: ["mangune", "benedict1913"]
         },
         toVerify: [
-          "How present-day Bagobo-Tagabawa elders tell the Tuglay and Tuglibung story, and whether they allow it to be retold.",
-          "The playing context of the togo, a bamboo instrument named in a 2024 study without a description."
+          {
+            text: "Benedict (1913) records Tuglay and Tuglibung in a historical Bagobo creation account; present-day Bagobo-Tagabawa telling and permission to retell remain unverified.",
+            refs: ["benedict1913"]
+          },
+          {
+            text: "The available abstract of Pitargue et al. (2024) reports a study of bamboo instruments used by Bagobo-Tagabawa and three other communities, but does not identify an instrument called togo; the name and playing context need confirmation from the full article or community knowledge holders.",
+            refs: ["pitargue2024"]
+          }
         ]
       }
     },
@@ -324,10 +338,19 @@ window.EMAG = {
       location: "Uplands and river valleys of Davao Oriental, facing the Pacific",
       landmark: "The balete tree and the Pacific coast",
       cover: {
-        src: "assets/img/mandaya.svg",
-        alt: "Illustration of steep green uplands dropping to the Pacific Ocean under a pale morning sky",
-        credit: "Illustration by the editors. Replace with a community-approved photograph.",
-        isIllustration: true
+        src: "assets/img/photos/mandaya-dagmay.jpg",
+        alt: "Mandaya dagmay abaca textile attributed to master artisan Samporonia Madanlo, photographed at the 2024 National Arts and Crafts Fair.",
+        fit: "contain",
+        credit: {
+          title: "Dagmay abaca textile Samporonia Madanlo Caraga Davao OrientalA",
+          creator: "Valenzuela400",
+          source: "Wikimedia Commons",
+          pageUrl: "https://commons.wikimedia.org/wiki/File:Dagmay_abaca_textile_Samporonia_Madanlo_Caraga_Davao_OrientalA.jpg",
+          originalUrl: "https://upload.wikimedia.org/wikipedia/commons/7/76/Dagmay_abaca_textile_Samporonia_Madanlo_Caraga_Davao_OrientalA.jpg",
+          license: "CC BY-SA 4.0",
+          licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        isIllustration: false
       },
       teaser:
         "Uplanders of the east coast, keepers of the dawot epic, a cloth taught in dreams, and poetry sung as debate.",
@@ -447,10 +470,19 @@ window.EMAG = {
       location: "Mountains and valleys of Davao de Oro and Davao del Norte",
       landmark: "Mount Kandaraga",
       cover: {
-        src: "assets/img/mansaka.svg",
-        alt: "Illustration of a mountain rising above a misty valley",
-        credit: "Illustration by the editors. Replace with a community-approved photograph.",
-        isIllustration: true
+        src: "assets/img/photos/mansaka.jpg",
+        alt: "Three Mansaka women wearing formal attire in Davao Province in 2015.",
+        fit: "contain",
+        credit: {
+          title: "Mansaka Tribeswomen 2015",
+          creator: "MansakaTribe",
+          source: "Wikimedia Commons",
+          pageUrl: "https://commons.wikimedia.org/wiki/File:Mansaka_Tribeswomen_2015.jpg",
+          originalUrl: "https://upload.wikimedia.org/wikipedia/commons/4/40/Mansaka_Tribeswomen_2015.jpg",
+          license: "CC BY-SA 4.0",
+          licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        isIllustration: false
       },
       teaser:
         "Mountain people of Davao de Oro, descended from a maiden on Mount Kandaraga, whose musicians learn from their ancestors.",
@@ -584,10 +616,19 @@ window.EMAG = {
       location: "Foothills of Mount Apo: Davao City's Marilog, Baguio and Calinan districts, and Kidapawan and Magpet, Cotabato",
       landmark: "Mount Apo (Lumut to Sondawa)",
       cover: {
-        src: "assets/img/obo.svg",
-        alt: "Illustration of the western face of Mount Apo with a Philippine eagle circling above a forested cliff",
-        credit: "Illustration by the editors. Replace with a community-approved photograph.",
-        isIllustration: true
+        src: "assets/img/photos/obo-manuvu.jpg",
+        alt: "Obu-Manuvu house at the 2026 Kadayawan Tribal Village in Magsaysay Park, Davao City, with mannequins displaying traditional clothing.",
+        fit: "cover",
+        credit: {
+          title: "Kadayawan Obu-Manuvu Village",
+          creator: "DScottishFold123",
+          source: "Wikimedia Commons",
+          pageUrl: "https://commons.wikimedia.org/wiki/File:Kadayawan_Obu-Manuvu_Village.jpg",
+          originalUrl: "https://upload.wikimedia.org/wikipedia/commons/1/14/Kadayawan_Obu-Manuvu_Village.jpg",
+          license: "CC BY-SA 4.0",
+          licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        isIllustration: false
       },
       teaser:
         "Mount Apo's western neighbours, whose ancestor first climbed the mountain and whose stories make kin of eagles.",
@@ -690,7 +731,10 @@ window.EMAG = {
           refs: ["david2024", "pef2019", "usm2026"]
         },
         toVerify: [
-          "Obo Manuvu instruments, song types and performance contexts from a primary source or a community knowledge holder.",
+          {
+            text: "The accessible 2019 community-authored Magpet report documents oral stories and weaving, but I found no documentation there for Ahong, Kuglong or their song contexts; Obo Manuvu knowledge-holder confirmation is still needed.",
+            refs: ["pef2019"]
+          },
           "Essays in A Voice from Mt. Apo (Arayam, Bayawan & Vander Molen, 2005), written by Obo Manobo authors, which we could not access."
         ]
       }
@@ -905,7 +949,7 @@ window.EMAG = {
     cole1916: { tier: "secondary", text: "Cole, M. C. (1916). Origin [Bagobo]. In <i>Philippine folk tales</i>. A. C. McClurg.", url: "https://sacred-texts.com/asia/pft/pft39.htm" },
     benedict1913: { tier: "scholarly", text: "Benedict, L. W. (1913). Bagobo myths. <i>Journal of American Folk-Lore, 26</i>(99), 13–63.", url: "https://archive.org/stream/jstor-534786/534786_djvu.txt" },
     santos1998: { tier: "scholarly", text: "Santos, R. P. (1998). Traditional music in Philippine cultures. In <i>Pahiyas: A Philippine harvest</i> (pp. 49–50). Smithsonian Center for Folklife and Cultural Heritage.", url: "https://folklife-media.si.edu/docs/festival/program-book-articles/FESTBK1998_16.pdf" },
-    pitargue2024: { tier: "scholarly", text: "Pitargue, F. C., Jr., Conda, J. M., Cortez, R. E., Jr., Balmedina, S. L., & Barile, E. R. (2024). [Bamboo species used in the musical instruments of the Kalinga, Majukayong, Bagobo-Tagabawa and T'boli communities]. <i>Journal of Tropical Forest Science, 36</i>(3), 252–261.", url: "https://jtfs.frim.gov.my/jtfs/article/download/2820/1947/3959" },
+    pitargue2024: { tier: "scholarly", text: "Pitargue, F. C., Jr., Conda, J. M., Cortez, R. E., Jr., Balmedina, S. L., & Barile, E. R. (2024). The bamboo species used in the production of musical instruments by four Filipino tribes (Kalinga [Lubuagan subtribe], Majukayong, Bagobo-Tagabawa and T'boli). <i>Journal of Tropical Forest Science, 36</i>(3), 252–261.", url: "https://doi.org/10.26525/jtfs2024.36.3.252" },
     tuban: { tier: "scholarly", text: "Tuban, J. R. (n.d.). A study of Bagobo Tagabawa folk speech using Murdock's and Eugenio's classification. <i>Southeastern Philippines Journal of Research and Development, 26</i>(2), 109–.", url: "https://journal.usep.edu.ph/index.php/Southeastern_Philippines_Journal/article/download/157/52" },
     ompang: { tier: "institutional", text: "Ompang, M. B. (n.d.). <i>The Mandaya ethnic group</i>. National Commission for Culture and the Arts.", url: "https://ncca.gov.ph/?p=4552" },
     upovpaa: { tier: "institutional", text: "University of the Philippines, Office of the Vice President for Academic Affairs. (n.d.). <i>Preserving Philippine ethno-epics</i>.", url: "https://ovpaa-old.up.edu.ph/?p=14252" },

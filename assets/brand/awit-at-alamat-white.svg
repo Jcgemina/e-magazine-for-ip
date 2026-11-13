@@ -1,0 +1,11 @@
+<svg fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title description"><title>Awit at Alamat</title>
+  <title id="title">Awit at Alamat</title>
+  <desc id="description">Five separate contour lines represent the five featured homelands.</desc>
+  <g fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M83 47c15-8 30-7 44 2s27 9 45-3"/>
+    <path d="M60 81c21-15 43-14 64 0s44 15 74-3"/>
+    <path d="M42 117c26-19 55-17 82 0s57 18 90-4"/>
+    <path d="M56 154c22-14 45-14 68 1s48 15 75-4"/>
+    <path d="M79 190c18-11 33-10 47 1s30 12 52-3"/>
+  </g>
+</svg>

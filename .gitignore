@@ -1,0 +1,34 @@
+# Local agent and editor state
+/.claude/
+/.codex/
+/.cursor/
+/.gemini/
+/.impeccable/
+/.vscode/
+
+# Local notes and machine-specific configuration
+/PRODUCT.md
+/Update.md
+/command.txt
+.env
+.env.*
+!.env.example
+
+# Ignore brand drafts; retain the final logo kit used by the pages
+/brand/*
+!/brand/final/
+
+# Generated dependencies, build output, and caches
+/node_modules/
+/dist/
+/build/
+/coverage/
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+desktop.ini

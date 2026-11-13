@@ -1,7 +1,3 @@
-/* =====================================================================
-   community.js — renders all content from window.EMAG into the page.
-   No animation here; scroll.js and main.js add behaviour afterwards.
-   ===================================================================== */
 (function () {
   "use strict";
   const D = window.EMAG;
@@ -74,6 +70,14 @@
     $("#coverSub").textContent = D.meta.subtitle;
     $("#coverGroup").innerHTML = D.meta.group.map((n) => `<li>${esc(n)}</li>`).join("");
     $("#coverClass").textContent = `${D.meta.section} · ${D.meta.teacher} · ${D.meta.year}`;
+    $("#coverVisual").innerHTML = D.communities
+      .map(
+        (c, i) => `<figure class="cover__slide ${c.cover.fit === "contain" ? "cover__slide--contain" : ""}${i === 0 ? " is-active" : ""}">
+          <img src="${esc(c.cover.src)}" alt="" loading="eager" decoding="async"${i === 0 ? ' fetchpriority="high"' : ""}>
+        </figure>`
+      )
+      .join("");
+    $("#coverPhotoName").textContent = D.communities[0].selectorName;
   }
 
   function renderIntro() {
@@ -126,7 +130,7 @@
     const cs = D.communities;
     $("#selVisual").innerHTML = cs
       .map(
-        (c, i) => `<figure class="sel-img" data-i="${i}">
+        (c, i) => `<figure class="sel-img ${c.cover.fit === "contain" ? "sel-img--contain" : ""}${i === 0 ? " is-active" : ""}" data-i="${i}">
           <img src="${esc(c.cover.src)}" alt="" ${i ? 'loading="lazy"' : ""} decoding="async" width="1600" height="1000">
         </figure>`
       )
@@ -156,6 +160,13 @@
       </div>`;
   }
 
+  function photoCreditHTML(credit) {
+    if (!credit || typeof credit !== "object") return esc(credit || "");
+    return `Photo: <cite>${esc(credit.title)}</cite> · Creator: ${esc(credit.creator)} ·
+      <a href="${esc(credit.licenseUrl)}" target="_blank" rel="noopener noreferrer">${esc(credit.license)}</a> ·
+      <a href="${esc(credit.pageUrl)}" target="_blank" rel="noopener noreferrer">${esc(credit.source)}</a>`;
+  }
+
   /* ---------- chapters ------------------------------------------------- */
   function para(item) {
     return `<p>${esc(item.text)}${cite(item.refs)}</p>`;
@@ -183,7 +194,12 @@
             <h5>What it tells us</h5>
             <p>${esc(s.meaning)}</p>
           </aside>
-        </article>`
+        </article>
+        ${c.id === "mandaya" && si === 0 ? `
+          <figure class="story__weave">
+            <img src="${esc(c.cover.src)}" alt="${esc(c.cover.alt)}" loading="lazy" decoding="async" width="1600" height="1000">
+            <figcaption>${photoCreditHTML(c.cover.credit)}</figcaption>
+          </figure>` : ""}`
       )
       .join("");
 
@@ -192,7 +208,7 @@
         (m) => `
         <li class="inst ${m.placeholder ? "inst--verify" : ""}">
           <span class="inst__icon" title="${esc(m.family)}: ${esc(FAMILY_HELP[m.family] || "")}">${FAMILY_ICON[m.family] || ""}</span>
-          <h5 class="inst__name">${esc(m.name)}</h5>
+          <h4 class="inst__name">${esc(m.name)}</h4>
           <p class="inst__family">${esc(m.family)}${m.placeholder ? ' <span class="flag">To verify</span>' : ""}</p>
           <p class="inst__desc">${esc(m.desc)}${cite(m.refs)}</p>
         </li>`
@@ -227,9 +243,9 @@
     return `
     <article class="chapter chapter--${c.id} ${flip ? "chapter--flip" : ""}" id="chapter-${c.id}" aria-labelledby="h-${c.id}" data-index="${i}">
       <header class="ch-open">
-        <figure class="ch-open__media">
+        <figure class="ch-open__media ${c.cover.fit === "contain" ? "ch-open__media--contain" : ""}">
           <img src="${esc(c.cover.src)}" alt="${esc(c.cover.alt)}" loading="lazy" decoding="async" width="1600" height="1000">
-          <figcaption>${esc(c.cover.credit)}</figcaption>
+          <figcaption>${photoCreditHTML(c.cover.credit)}</figcaption>
         </figure>
         <div class="ch-open__text">
           <p class="ch-open__num">Chapter ${i + 1} of ${all.length}</p>
@@ -253,11 +269,44 @@
       <p class="ch-statement wrap"><span class="ch-statement__text">${esc(ch.statement)}</span>${cite(ch.statementRefs)}</p>
 
       <section class="ch-stories wrap" aria-label="Myths and stories">
-        <h3 class="ch-sub">Myths and stories</h3>
+        <div class="ch-stories__heading">
+          <h3 class="ch-sub">Myths and stories</h3>
+          <svg class="ch-stories__thread" viewBox="0 0 360 96" aria-hidden="true" focusable="false">
+            <path d="M6 74 C36 74 34 22 68 22 S102 74 136 74 S170 22 204 22 S238 74 272 74 S306 22 340 22"/>
+            <circle cx="6" cy="74" r="4"/>
+            <circle cx="136" cy="74" r="4"/>
+            <circle cx="272" cy="74" r="4"/>
+          </svg>
+        </div>
         ${stories}
       </section>
 
       <section class="ch-music" aria-label="Music">
+        <svg class="ch-music__melody" viewBox="0 0 820 120" aria-hidden="true" focusable="false">
+          <path d="M0 66 C56 66 66 28 118 28 S178 98 230 98 S288 34 344 34 S402 82 458 82 S516 44 572 44 S638 72 694 72 S764 50 820 50"/>
+          <circle cx="118" cy="28" r="4"/>
+          <circle cx="230" cy="98" r="4"/>
+          <circle cx="344" cy="34" r="4"/>
+          <circle cx="572" cy="44" r="4"/>
+          <circle cx="820" cy="50" r="4"/>
+          <g class="ch-music__bird" transform="translate(24 30)">
+            <path class="ch-music__bird-body" d="M0 17Q14 3 28 16 43 2 60 8 50 21 32 21 20 31 1 27 9 24 12 20 6 20 0 17Z"/>
+            <path class="ch-music__bird-wing" d="M14 19Q23 10 31 17"/>
+          </g>
+        </svg>
+        <svg class="ch-music__notes" viewBox="0 0 820 120" aria-hidden="true" focusable="false">
+          <g class="ch-music__notes-float">
+            <g class="ch-music__note" transform="translate(160 18) scale(1.3)">
+              <path d="M10 0v20c-4-3-11-1-11 5 0 5 7 6 11 2 2-2 3-4 3-7V8l18-4v15c-4-3-11-1-11 5 0 5 7 6 11 2 2-2 3-4 3-7V0z"/>
+            </g>
+            <g class="ch-music__note" transform="translate(360 60) scale(.98)">
+              <path d="M10 0v20c-4-3-11-1-11 5 0 5 7 6 11 2 2-2 3-4 3-7V8l18-4v15c-4-3-11-1-11 5 0 5 7 6 11 2 2-2 3-4 3-7V0z"/>
+            </g>
+            <g class="ch-music__note" transform="translate(560 100) scale(.88)">
+              <path d="M10 0v20c-4-3-11-1-11 5 0 5 7 6 11 2 2-2 3-4 3-7V8l18-4v15c-4-3-11-1-11 5 0 5 7 6 11 2 2-2 3-4 3-7V0z"/>
+            </g>
+          </g>
+        </svg>
         <div class="wrap">
           <h3 class="ch-sub">Music</h3>
           <p class="ch-music__intro">${esc(ch.music.intro)}</p>
@@ -283,7 +332,13 @@
           <p>${esc(ch.significance.text)}${cite(ch.significance.refs)}</p>
           <div class="verify">
             <h4><span class="flag">To verify</span> Still missing from this chapter</h4>
-            <ul>${ch.toVerify.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
+            <ul>${ch.toVerify
+              .map((t) =>
+                typeof t === "string"
+                  ? `<li>${esc(t)}</li>`
+                  : `<li>${esc(t.text)}${cite(t.refs)}</li>`
+              )
+              .join("")}</ul>
           </div>
         </div>
       </section>
@@ -298,9 +353,17 @@
 
   function renderChapters() {
     const cs = D.communities;
-    $("#chapters").innerHTML =
-      `<header class="part-head part-head--chapters wrap"><p class="part-head__part">Part two</p><h2>The chapters</h2></header>` +
-      cs.map((c, i) => renderChapter(c, i, cs)).join("");
+    const container = $("#chapters");
+    const header = `<header class="part-head part-head--chapters wrap"><p class="part-head__part">Part two</p><h2>The chapters</h2></header>`;
+    const renderSelected = (i) => {
+      const c = cs[i];
+      if (!c) return;
+      container.innerHTML = header + renderChapter(c, i, cs);
+      document.dispatchEvent(new CustomEvent("emag:chapter-rendered", { detail: { index: i, id: c.id } }));
+    };
+
+    renderSelected(0);
+    document.addEventListener("emag:community", (e) => renderSelected(e.detail.index));
   }
 
   /* ---------- comparison --------------------------------------------- */
@@ -372,6 +435,21 @@
       "Set in Big Shoulders Display and Newsreader.";
   }
 
+  function renderImageCredits() {
+    $("#imageCreditList").innerHTML = D.communities
+      .map((c) => {
+        const credit = c.cover.credit;
+        return `<li class="image-credit">
+          <h3>${esc(c.name)}</h3>
+          <p><cite>${esc(credit.title)}</cite> · Creator listed on Commons: ${esc(credit.creator)}.</p>
+          <p>Source: <a href="${esc(credit.pageUrl)}" target="_blank" rel="noopener noreferrer">${esc(credit.source)} file page</a> ·
+            <a href="${esc(credit.originalUrl)}" target="_blank" rel="noopener noreferrer">Original image</a></p>
+          <p>License: <a href="${esc(credit.licenseUrl)}" target="_blank" rel="noopener noreferrer">${esc(credit.license)}</a>.</p>
+        </li>`;
+      })
+      .join("");
+  }
+
   /* ---------- menu ---------------------------------------------------- */
   function renderMenu() {
     const items = [
@@ -382,6 +460,7 @@
       ["#comparison", "Side by side"],
       ["#significance", "Why it matters"],
       ["#conclusion", "What we learned"],
+      ["#image-credits", "Image credits"],
       ["#references", "References"]
     ];
     $("#menuList").innerHTML = items
@@ -397,6 +476,7 @@
       renderChapters();
       renderComparison();
       renderClosing();
+      renderImageCredits();
       renderMenu();
     },
     selectorPanelHTML

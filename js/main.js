@@ -1,7 +1,3 @@
-/* =====================================================================
-   main.js — boots the e-magazine and wires up general UI:
-   contents menu, comparison highlights, links back to the selector.
-   ===================================================================== */
 (function () {
   "use strict";
   const $ = (s, el = document) => el.querySelector(s);
@@ -57,6 +53,44 @@
     });
   }
 
+  // Chapter links select the requested tribe before scrolling to its chapter.
+  function chapterLinks() {
+    const S = window.EMAGScroll.Selector;
+    const selectChapter = (id, shouldScroll) => {
+      const i = S.names.findIndex((name) => name.id === `tab-${id}`);
+      if (i < 0) return false;
+
+      S.goTo(i);
+      if (shouldScroll) {
+        const chapter = document.getElementById(`chapter-${id}`);
+        if (!chapter) {
+          console.error(`The selected community chapter was not rendered: ${id}`);
+          return true;
+        }
+        if (!chapter.hasAttribute("tabindex")) chapter.setAttribute("tabindex", "-1");
+        chapter.focus({ preventScroll: true });
+        chapter.scrollIntoView({ behavior: S.reduced ? "auto" : "smooth" });
+      }
+      return true;
+    };
+
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest('a[href^="#chapter-"]');
+      if (!a) return;
+
+      const id = a.getAttribute("href").slice("#chapter-".length);
+      if (!selectChapter(id, false)) return;
+      e.preventDefault();
+      history.pushState(null, "", `#chapter-${id}`);
+      selectChapter(id, true);
+    });
+
+    window.addEventListener("popstate", () => {
+      const match = location.hash.match(/^#chapter-(.+)$/);
+      if (match) selectChapter(match[1], true);
+    });
+  }
+
   // Move keyboard focus to the target of in-page links, so screen-reader and
   // keyboard users land where sighted users do.
   function anchorFocus() {
@@ -76,7 +110,13 @@
     menu();
     matrix();
     backLinks();
+    chapterLinks();
     anchorFocus();
+    const initialChapter = location.hash.match(/^#chapter-(.+)$/);
+    if (initialChapter) {
+      const index = window.EMAGScroll.Selector.names.findIndex((name) => name.id === `tab-${initialChapter[1]}`);
+      if (index >= 0) window.EMAGScroll.Selector.goTo(index);
+    }
     // If the page was opened at a chapter anchor, honour it after layout settles.
     if (location.hash && location.hash.length > 1) {
       const t = document.getElementById(location.hash.slice(1));
