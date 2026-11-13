@@ -168,10 +168,13 @@ window.EMAG = {
         },
         toVerify: [
           {
-            text: "Ragragio and Paluga (2025) report that Pantaron Manobo elders pass historical knowledge on through epics and hero stories; specific Ata titles or plot summaries, and family permission to share them, remain unverified.",
-            refs: ["ragragio2025"]
+            text: "Ragragio and Paluga (2025) report that younger Pantaron Manobo learned history through epics and hero stories. Pagusara (2014) publishes a Tulalang episode set at Mount Pantaron, but does not identify it as an Ata story or document permission to share it. Ata-specific story titles or plot summaries, and permission from families or knowledge holders to share them, remain unverified.",
+            refs: ["ragragio2025", "pagusara2014"]
           },
-          "Recordings of kuglung or saluray playing that the community has cleared for public use."
+          {
+            text: "Pagusara (2014) mentions the kuglung and saluray but includes no recording. The sources reviewed do not verify a recording cleared by the community for public use. Confirm permission with the relevant knowledge holders before adding audio.",
+            refs: ["pagusara2014"]
+          }
         ]
       }
     },
