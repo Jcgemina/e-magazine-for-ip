@@ -11,7 +11,7 @@ window.EMAG = {
             "Gabrielle Sebastien Abela", 
             "Adrian Florida"],
     section: "BSIT - 3rd Year",
-    teacher: "Esmerinkle",
+    teacher: "Rosendo Rocacurva Meriwan",
     year: "2026"
   },
 
@@ -22,8 +22,13 @@ window.EMAG = {
       "The Davao Region is home to many Indigenous Cultural Communities and Indigenous Peoples (ICCs/IPs). They are often grouped together under the word Lumad, but each has its own language, homeland, spirit world and musical practice. Treating them as one culture erases the very differences that make their heritage worth keeping.",
       "We chose five communities whose homelands touch the region's great landmarks: the Pantaron range in the north-west, Mount Apo in the south-west, and the river valleys and Pacific coast of the east. For each one we read published research, community-authored documents and reports by cultural workers. Where we could not find a reliable source, we say so instead of filling the gap."
     ],
+    bodyRefs: [
+      ["ragragio2020", "masinaring2011", "ompang", "bahandi"],
+      ["ragragio2025", "masinaring2011", "david2024", "ompang"]
+    ],
     note:
-      "A word on names: several communities use names for themselves that differ from the ones in government lists and older books. We use the names assigned for this project and explain the alternatives in each chapter."
+      "A word on names: several communities use names for themselves that differ from the ones in government lists and older books. We use the names assigned for this project and explain the alternatives in each chapter.",
+    noteRefs: ["ragragio2020", "bahandi", "david2024"]
   },
 
   communities: [
@@ -38,6 +43,7 @@ window.EMAG = {
       cover: {
         src: "assets/img/photos/ata-manobo.jpg",
         alt: "Ata women from Barangay Tapak manually mill rice at the Kadayawan Cultural Village in Davao City.",
+        caption: "Ata women from Barangay Tapak mill rice at Davao City's Kadayawan Cultural Village. This photograph records one public cultural-village scene, not the breadth of Ata Manobo life.",
         fit: "contain",
         credit: {
           title: "ATA Tribe",
@@ -51,7 +57,7 @@ window.EMAG = {
         isIllustration: false
       },
       teaser:
-        "Highland people of the Pantaron range, where epics are remembered by river and a sacred rock keeps the soul of a datu.",
+        "In Talaingod, named rivers, remembered epics and the rhythm of rice work connect story, land and song.",
       featured: {
         story: "Datu Maguinta and the immortal Katipunan",
         sound: "The bangkakaw, the beat of rice pestles"
@@ -105,6 +111,7 @@ window.EMAG = {
         music: {
           intro:
             "Music in Talaingod is tied to work, worship and, more recently, to the community's struggle to stay on its land.",
+          refs: ["masinaring2011", "pagusara2014"],
           instruments: [
             {
               name: "Bangkakaw",
@@ -152,11 +159,11 @@ window.EMAG = {
           title: "The farming year, with its rites",
           intro: "Farming is a sequence of stages, and each one has its own observances. Song, prayer and dance mark the turning points.",
           steps: [
-            { name: "Sunggod-to-kamanga", desc: "The new cropping season opens. Farm tools are prayed over and covered with cooked rice." },
-            { name: "Panlawag", desc: "Omen-seeking. The call of the limukon (turtle dove) tells whether a site may be cleared." },
-            { name: "Pangamot to silaban", desc: "Under-brushing, felling, drying and burning, each with its own customary observances." },
-            { name: "Urok", desc: "Planting." },
-            { name: "Hiluto", desc: "Harvest thanksgiving with goting, a ceremonial tasting of new rice, and dances such as the bwalawan." }
+            { name: "Sunggod-to-kamanga", desc: "The new cropping season opens. Farm tools are prayed over and covered with cooked rice.", refs: ["masinaring2011"] },
+            { name: "Panlawag", desc: "Omen-seeking. The call of the limukon (turtle dove) tells whether a site may be cleared.", refs: ["masinaring2011"] },
+            { name: "Pangamot to silaban", desc: "Under-brushing, felling, drying and burning, each with its own customary observances.", refs: ["masinaring2011"] },
+            { name: "Urok", desc: "Planting.", refs: ["masinaring2011"] },
+            { name: "Hiluto", desc: "Harvest thanksgiving with goting, a ceremonial tasting of new rice, and dances such as the bwalawan.", refs: ["masinaring2011"] }
           ],
           refs: ["masinaring2011"]
         },
@@ -190,6 +197,7 @@ window.EMAG = {
       cover: {
         src: "assets/img/photos/bagobo-tagabawa.jpg",
         alt: "Bagobo-Tagabawa house display in Davao City, identified by a sign and a panel showing community members in traditional attire.",
+        caption: "A Bagobo-Tagabawa house display in Davao City, shown with a panel identifying the community. The exhibit is one public presentation, not a portrait of every Tagabawa community.",
         fit: "cover",
         credit: {
           title: "Traditional House by the Bagobo Tagabawa Tribe",
@@ -203,7 +211,7 @@ window.EMAG = {
         isIllustration: false
       },
       teaser:
-        "People of Apo Sandawa, with a first couple on the mountain, a goddess who tends dead infants, and gongs hung in a pyramid.",
+        "Stories rooted on Apo Sandawa meet a musical world of graduated gongs, bamboo instruments and different kinds of song.",
       featured: {
         story: "Lumabat and Mebuyan",
         sound: "Graduated gongs, from bandit to tagungguan"
@@ -258,6 +266,7 @@ window.EMAG = {
         music: {
           intro:
             "Bagobo music joins bronze gongs to bamboo instruments, and some sounds had jobs beyond entertainment.",
+          refs: ["santos1998", "benedict1913", "pitargue2024"],
           instruments: [
             {
               name: "Graduated gongs",
@@ -343,6 +352,7 @@ window.EMAG = {
       cover: {
         src: "assets/img/photos/mandaya-dagmay.jpg",
         alt: "Mandaya dagmay abaca textile attributed to master artisan Samporonia Madanlo, photographed at the 2024 National Arts and Crafts Fair.",
+        caption: "Dagmay abaca textile attributed to master artisan Samporonia Madanlo, photographed at the 2024 National Arts and Crafts Fair.",
         fit: "contain",
         credit: {
           title: "Dagmay abaca textile Samporonia Madanlo Caraga Davao OrientalA",
@@ -356,7 +366,7 @@ window.EMAG = {
         isIllustration: false
       },
       teaser:
-        "Uplanders of the east coast, keepers of the dawot epic, a cloth taught in dreams, and poetry sung as debate.",
+        "From the many-night dawot to the call-and-response bayok, this chapter follows how stories and speech are performed.",
       featured: {
         story: "The legend of the dagmay",
         sound: "The dawot, chanted over many nights"
@@ -407,6 +417,7 @@ window.EMAG = {
         music: {
           intro:
             "Mandaya instruments carry history and announce important events; spoken art can be as musical as any song.",
+          refs: ["ompang", "upovpaa"],
           instruments: [
             {
               name: "Kudlong",
@@ -459,7 +470,7 @@ window.EMAG = {
         },
         toVerify: [
           "Plot summaries of the recorded hullubaton, once the translations are available and the balyans agree to share them.",
-          "Whether the word dawot also names a woman's garment, as one unreviewed source claims."
+          "Whether dawot also names a woman's garment could not be verified in the sources consulted for this issue."
         ]
       }
     },
@@ -475,6 +486,7 @@ window.EMAG = {
       cover: {
         src: "assets/img/photos/mansaka.jpg",
         alt: "Three Mansaka women wearing formal attire in Davao Province in 2015.",
+        caption: "An archival photograph of three Mansaka women in formal attire, taken in Davao Province in 2015; one image cannot represent the full range of Mansaka life.",
         fit: "contain",
         credit: {
           title: "Mansaka Tribeswomen 2015",
@@ -488,7 +500,7 @@ window.EMAG = {
         isIllustration: false
       },
       teaser:
-        "Mountain people of Davao de Oro, descended from a maiden on Mount Kandaraga, whose musicians learn from their ancestors.",
+        "Stories of Mount Kandaraga alongside music for courtship, ceremony, harvest and gathering.",
       featured: {
         story: "The maiden of Mount Kandaraga",
         sound: "The kudlong, played solo for courtship"
@@ -537,6 +549,7 @@ window.EMAG = {
         music: {
           intro:
             "Mansaka music is the best documented of the five in our sources, thanks to musicians in Tagum who agreed to share it with a researcher after a formal consent process.",
+          refs: ["marfil2013"],
           instruments: [
             {
               name: "Gimbal",
@@ -604,8 +617,11 @@ window.EMAG = {
           refs: ["marfil2013", "kuizon2009"]
         },
         toVerify: [
-          "Recordings of binarig or dawot that Mansaka cultural masters have approved for public sharing.",
-          "Other Mansaka myths collected by Magaña (1975), which we could not access."
+          {
+            text: "Recordings of binarig or dawot that Mansaka cultural masters have approved for public sharing.",
+            refs: ["marfil2013"]
+          },
+          "Additional Mansaka stories that could be checked against an accessible source and shared with permission."
         ]
       }
     },
@@ -621,6 +637,7 @@ window.EMAG = {
       cover: {
         src: "assets/img/photos/obo-manuvu.jpg",
         alt: "Obu-Manuvu house at the 2026 Kadayawan Tribal Village in Magsaysay Park, Davao City, with mannequins displaying traditional clothing.",
+        caption: "An Obo-Manuvu house display at Davao City's 2026 Kadayawan Tribal Village, with mannequins in traditional clothing.",
         fit: "cover",
         credit: {
           title: "Kadayawan Obu-Manuvu Village",
@@ -634,7 +651,7 @@ window.EMAG = {
         isIllustration: false
       },
       teaser:
-        "Mount Apo's western neighbours, whose ancestor first climbed the mountain and whose stories make kin of eagles.",
+        "Stories of Mount Apo and animal kinship sit beside a community-led call to document music on its own terms.",
       featured: {
         story: "Pandi and the Philippine eagle",
         sound: "The ahong, a set of eight to ten gongs"
@@ -692,7 +709,8 @@ window.EMAG = {
         ],
         music: {
           intro:
-            "Obo Manuvu music is the least documented of the five in sources we could check. What follows comes from a secondary source and should be confirmed with the community or the CCP Encyclopedia of Philippine Art.",
+            "Obo Manuvu music is underdocumented in the sources we could check. The tentative instrument descriptions below come from a secondary source; a community request for documentation is an invitation to future work, not consent to publish.",
+          refs: ["manobogroup", "ccp", "usm2026"],
           instruments: [
             {
               name: "Ahong",
@@ -711,18 +729,18 @@ window.EMAG = {
           ],
           forms: [
             {
-              name: "Itulon",
-              desc: "Oral history, recounted and passed on by elders.",
-              refs: ["david2024"]
-            },
-            {
               name: "Monkey dance",
               desc: "A traditional dance imitating the behaviour of monkeys, shown in the community's own publication.",
               refs: ["pef2019b"]
-            },
+            }
+          ]
+        },
+        contexts: {
+          title: "Community-led documentation",
+          items: [
             {
-              name: "Community-led documentation",
-              desc: "In March 2026 the Ovu Manobo of Magpet formally asked the University of Southern Mindanao to help document their dances, music and oral traditions.",
+              name: "Ovu Manobo of Magpet",
+              desc: "In March 2026, the community formally asked the University of Southern Mindanao to help document its dances, music and oral traditions.",
               refs: ["usm2026"]
             }
           ]
@@ -738,7 +756,10 @@ window.EMAG = {
             text: "The accessible 2019 community-authored Magpet report documents oral stories and weaving, but I found no documentation there for Ahong, Kuglong or their song contexts; Obo Manuvu knowledge-holder confirmation is still needed.",
             refs: ["pef2019"]
           },
-          "Essays in A Voice from Mt. Apo (Arayam, Bayawan & Vander Molen, 2005), written by Obo Manobo authors, which we could not access."
+          {
+            text: "Essays in A Voice from Mt. Apo (Arayam, Bayawan & Vander Molen, 2005), written by Obo Manobo authors, were not accessible for this issue.",
+            refs: ["voiceapo"]
+          }
         ]
       }
     }
@@ -761,6 +782,13 @@ window.EMAG = {
           mandaya: "The balete tree, home of Tagamaling",
           mansaka: "Mount Kandaraga; a sacred mountain place for music",
           obo: "Mount Apo (Lumut to Sondawa); Sooang Banog cliff"
+        },
+        refs: {
+          ata: ["ragragio2025", "masinaring2011"],
+          tagabawa: ["mangune", "cole1916"],
+          mandaya: ["masinaring2011", "ompang"],
+          mansaka: ["masinaring2011", "marfil2013"],
+          obo: ["david2024", "pef2019"]
         }
       },
       {
@@ -772,6 +800,13 @@ window.EMAG = {
           mandaya: "Magbabaya",
           mansaka: "Magbabaya",
           obo: "Manama"
+        },
+        refs: {
+          ata: ["masinaring2011"],
+          tagabawa: ["cole1916", "benedict1913"],
+          mandaya: ["masinaring2011", "nabayra2014"],
+          mansaka: ["masinaring2011"],
+          obo: ["pef2019"]
         }
       },
       {
@@ -783,17 +818,28 @@ window.EMAG = {
           mandaya: "Not found in our sources",
           mansaka: "The maiden of Mount Kandaraga",
           obo: "Apao, first to climb Mount Apo"
+        },
+        refs: {
+          tagabawa: ["cole1916"],
+          mansaka: ["masinaring2011"],
+          obo: ["david2024"]
         }
       },
       {
         id: "gift",
-        label: "Knowledge given by spirits",
+        label: "Spiritual and ancestral relationships",
         cells: {
-          ata: "Katipunan becomes an abyan, a guardian spirit",
+          ata: "Katipunan becomes Maguinta's abyan, a guardian spirit",
           tagabawa: "Not found in our sources",
           mandaya: "Tagamaling teaches dagmay weaving in dreams",
           mansaka: "Ancestors teach music to cultural masters",
           obo: "Tohomaling gives weaving; Tohovikaa gives wisdom"
+        },
+        refs: {
+          ata: ["masinaring2011"],
+          mandaya: ["masinaring2011"],
+          mansaka: ["marfil2013"],
+          obo: ["pef2019"]
         }
       },
       {
@@ -805,6 +851,13 @@ window.EMAG = {
           mandaya: "Dawot, chanted by magdadawot over many nights",
           mansaka: "Dawot, improvised and sung with kudlong",
           obo: "Itulon, oral history"
+        },
+        refs: {
+          ata: ["ragragio2025"],
+          tagabawa: ["benedict1913"],
+          mandaya: ["upovpaa"],
+          mansaka: ["marfil2013"],
+          obo: ["david2024"]
         }
       },
       {
@@ -816,6 +869,12 @@ window.EMAG = {
           mandaya: "Kudlong",
           mansaka: "Kudlong",
           obo: "Kuglong (to verify)"
+        },
+        refs: {
+          ata: ["pagusara2014"],
+          mandaya: ["ompang"],
+          mansaka: ["marfil2013"],
+          obo: ["manobogroup"]
         }
       },
       {
@@ -827,6 +886,11 @@ window.EMAG = {
           mandaya: "Not found in our sources",
           mansaka: "Agung and an eight-gong kulintang",
           obo: "Ahong of 8–10 gongs (to verify)"
+        },
+        refs: {
+          tagabawa: ["santos1998"],
+          mansaka: ["marfil2013"],
+          obo: ["manobogroup"]
         }
       },
       {
@@ -838,6 +902,10 @@ window.EMAG = {
           mandaya: "Gimbao, doe and stag hide",
           mansaka: "Gimbal, deer skin",
           obo: "Not found in our sources"
+        },
+        refs: {
+          mandaya: ["ompang"],
+          mansaka: ["marfil2013"]
         }
       },
       {
@@ -849,48 +917,61 @@ window.EMAG = {
           mandaya: "Kudlong before farming and hunting",
           mansaka: "Sinakay-sakay; Pagsawitan festival",
           obo: "Not found in our sources"
+        },
+        refs: {
+          ata: ["masinaring2011"],
+          mandaya: ["ompang"],
+          mansaka: ["marfil2013", "masinaring2011"]
         }
       }
     ],
     similarities: [
       {
-        title: "The land is the first scripture",
-        text: "In every community a real place carries the story. Mount Apo anchors both the Bagobo-Tagabawa origin myth and the Obo Manuvu story of Apao. Mount Pantaron becomes sacred through Datu Maguinta, and a chair-shaped rock on Mount Kandaraga marks the Mansaka ancestor. Even the Mandaya story turns on a particular tree. Myths here do not happen \"once upon a time, somewhere\": they happen on a ridge you can see from the village."
+        title: "Stories are rooted in particular places",
+        text: "Several accounts name the places where a story unfolds: Cibolan on Mount Apo in a Bagobo origin account, Apao's landmarks in Obo Manuvu history, Sungkalob in an Ata Manobo legend, and Mount Kandaraga in a Mansaka origin story. The Mandaya dagmay account turns on a balete tree. These distinct relationships to place are not one shared origin story.",
+        refs: ["cole1916", "david2024", "ragragio2025", "masinaring2011", "ompang"]
       },
       {
-        title: "Skills come from the spirit world",
-        text: "Four of the five traditions say that an important skill was given, not invented. Tagamaling teaches the Mandaya to weave in dreams; Tohomaling gives weaving to the Obo Manuvu; Mansaka masters receive music from their ancestors; Katipunan becomes a guardian spirit to an Ata Manobo datu. This makes weaving and music sacred trusts, which is why they begin with prayer."
+        title: "Knowledge has different origins and keepers",
+        text: "Some accounts connect knowledge with spiritual or ancestral relationships: Tagamaling teaches dagmay weaving in dreams, Obo Manuvu accounts name spirits associated with weaving and wisdom, and Mansaka cultural masters describe music as received from ancestors. The Ata Manobo account of Katipunan instead centers on a spirit companion. These are different accounts, not a shared doctrine.",
+        refs: ["masinaring2011", "pef2019", "marfil2013"]
       },
       {
-        title: "Epics are performed, not read",
-        text: "Each community keeps long narratives in performance: the Ata Manobo river-hero epics, the Bagobo ulit, the Mandaya and Mansaka dawot, the Obo itulon. Each depends on a living teller, from Moyra learning from her sister to the magdadawot chanting for many nights. When the teller is gone, the story is gone."
+        title: "Narrative forms are performed and passed on",
+        text: "The sources describe Ata Manobo river-hero epics, the Bagobo ulit, Mandaya and Mansaka forms both called dawot, and Obo Manuvu itulon oral history. Their forms and performance contexts differ: a Mandaya dawot may take many nights, while the Mansaka dawot is described as improvised and sung. They should not be treated as interchangeable.",
+        refs: ["ragragio2025", "benedict1913", "upovpaa", "marfil2013", "david2024"]
       },
       {
-        title: "A shared family of instruments",
-        text: "The two-string boat lute appears under related names: kudlong for the Mandaya and Mansaka, kuglung in Talaingod, kuglong in Magpet. Gongs, bamboo flutes and jaw's harps recur across the region. These shared instruments point to long contact between neighbouring peoples."
+        title: "Musical parallels need careful reading",
+        text: "A two-string lute appears under related names in sources on Ata Manobo, Mandaya and Mansaka music; a Magpet account of a similar instrument remains unverified. Gongs and bamboo instruments are also documented in some chapters, but the available sources are uneven. Similar names or instruments invite comparison; on their own, they do not establish a shared origin.",
+        refs: ["pagusara2014", "ompang", "marfil2013", "manobogroup", "pitargue2024"]
       }
     ],
     differences: [
       {
-        title: "Two names for God, two language families",
-        text: "The Ata Manobo, Obo Manuvu and early Bagobo records name the high god Manama, while the Mandaya and Mansaka say Magbabaya. The split follows language: the Ata Manobo, Obo and Tagabawa speak Manobo languages, while the Mandaya and Mansaka speak Mandaya-related languages. In these five cases, belief and language travel together.",
-        refs: ["masinaring2011", "pef2019", "cole1916", "katig", "nabayra2014"]
+        title: "Different names, different records",
+        text: "The sources here name Manama for Ata Manobo and Obo Manuvu beliefs; early Bagobo accounts also record Manama. Mandaya and Mansaka sources name Magbabaya. The older Bagobo records do not stand in for every Tagabawa community today.",
+        refs: ["masinaring2011", "pef2019", "cole1916", "benedict1913", "nabayra2014"]
       },
       {
         title: "Same word, different practice",
-        text: "Both the Mandaya and Mansaka use the word dawot, but differently. The Mandaya dawot is a fixed epic chanted from memory in an archaic language; the Mansaka dawot is improvised storytelling, each story with its own tune and the audience shouting replies. A shared word does not mean a shared practice."
+        text: "Both the Mandaya and Mansaka use the word dawot, but differently. The Mandaya dawot is a multi-night epic chanted from memory in an archaic language; the Mansaka dawot is described as improvised storytelling, with its own tune and shouted audience responses. A shared word does not mean a shared practice.",
+        refs: ["upovpaa", "marfil2013"]
       },
       {
         title: "Who tells the story",
-        text: "Early records describe the Bagobo ulit as often told by a young woman at dusk after weaving. Among the Mansaka, only singers considered specially gifted may perform the dawot. Ata Manobo chanting passes from sibling to sibling. Who has the right to tell a story differs from one people to the next."
+        text: "Early records describe the Bagobo ulit as often told by a young woman at dusk after weaving. A Mansaka study describes dawot as performed by gifted singers, while an Ata Manobo account follows a chant passing between sisters. The sources therefore show different telling contexts, not one rule shared by all five communities.",
+        refs: ["benedict1913", "marfil2013", "ragragio2025"]
       },
       {
         title: "What the music is for",
-        text: "Ata Manobo music, as documented, grows out of work: rice pestles and harvest dances. Mandaya sound has practical and civic uses, from the kudlong before a hunt to the bayok that settles disputes. Bagobo gongs once had a cosmic job, driving off the monster that swallows the moon. Mansaka ensembles change size with the occasion: large for weddings, small for healing."
+        text: "The documented uses also vary: Ata Manobo rice-pounding rhythms and harvest dances; Mandaya kudlong before hunting and bayok in conflict settlement; Bagobo gongs sounded during an eclipse; and Mansaka ensembles that change with the occasion. The sources do not support reducing these different practices to one purpose.",
+        refs: ["masinaring2011", "ompang", "benedict1913", "marfil2013"]
       },
       {
         title: "How well each is documented",
-        text: "Mansaka music and the Mandaya dawot have detailed recent studies; Obo Manuvu music has almost none we could verify. This gap reflects who researchers have visited, not how rich each tradition is."
+        text: "Our consulted sources give detailed accounts of Mansaka music and the Mandaya dawot, while we found much less verifiable material on Obo Manuvu music. That is a limit of this issue's sources, not a measure of the tradition or its importance.",
+        refs: ["marfil2013", "upovpaa", "manobogroup", "usm2026"]
       }
     ]
   },
@@ -901,12 +982,12 @@ window.EMAG = {
   significance: [
     {
       title: "Identity",
-      text: "Origin stories tell each people who they are and where they belong: descendants of the Kandaraga maiden, of Tuglay and Tuglibung, of Apao. When a community fights to keep its ancestral domain, these stories become evidence. Elders' saying that they have always been in the Pantaron is both memory and claim.",
+      text: "The sources preserve different ways of relating identity to place: a Mansaka ancestor associated with Mount Kandaraga, a Bagobo origin account set on Mount Apo, an Obo Manuvu account of Apao, and Pantaron Manobo elders' statement of long residence. These accounts have different histories and should not be treated as interchangeable evidence of identity or land rights.",
       refs: ["masinaring2011", "cole1916", "david2024", "ragragio2025"]
     },
     {
       title: "Knowledge",
-      text: "Myths and songs carry practical knowledge. The Ata Manobo farming rites encode a farming calendar, Obo bird omens forecast rain and drought, and the Mandaya dawot preserves customs and law. Before schools reached the highlands, epics were how young people learned history.",
+      text: "Stories and music can carry practical knowledge in different ways: Ata Manobo farming rites mark stages in the agricultural year; the Obo Manuvu source describes omens and environmental knowledge; and the Mandaya dawot relates customs, ways of life and adventures. Ragragio and Paluga also describe epics as a way Pantaron Manobo youth learned history before formal schooling.",
       refs: ["masinaring2011", "pef2019", "upovpaa", "ragragio2025"]
     },
     {
@@ -916,20 +997,23 @@ window.EMAG = {
     },
     {
       title: "Continuity under pressure",
-      text: "Every chapter shows the same risk: aging bards, archaic language, and young people drawn elsewhere. The answers are also local: balyans offering their epics for recording, the Obo Monuvu writing their own knowledge book, and the Ovu Manobo of Magpet asking a university to help them document their music.",
-      refs: ["upovpaa", "marfil2013", "pef2019", "usm2026"]
+      text: "The sources describe distinct circumstances, not one shared crisis: the Mandaya dawot's archaic language, Mansaka elders' concerns about younger listeners, and Ata Manobo families' displacement appear alongside community-led documentation by Obo Monuvu authors and the Ovu Manobo of Magpet. Each account calls for listening to the people involved rather than assuming one solution.",
+      refs: ["upovpaa", "marfil2013", "pagusara2014", "pef2019", "usm2026"]
     }
   ],
 
   conclusion: [
-    "The five communities do not share one culture. They share a region, some instruments, and the conviction that the land, the spirits and the people are bound together. Where they differ, in their names for God, in who may tell a story, in what music is for, the differences are the point.",
-    "We also learned that a fair comparison has to report its own gaps. Some of what we wanted to show, recordings and sacred songs above all, is not ours to publish without the communities' consent. The right next step is not more searching online but listening, with permission, to the people who keep these traditions."
+    "These five communities are not five versions of one culture. Their stories and music speak from distinct places, histories and relationships—and the sources gathered here are only a partial record.",
+    "This issue ends with questions still open, especially where music has been poorly documented or where knowledge is not ours to share. The next chapter belongs to the people who carry these traditions: may they lead how their stories are heard, how their music is recorded, and what should remain private."
   ],
 
   protocol: [
-    "Under the Indigenous Peoples' Rights Act of 1997 (Republic Act No. 8371), research involving ICCs/IPs requires their free and prior informed consent (FPIC), handled through the National Commission on Indigenous Peoples (NCIP).",
+    {
+      text: "The Indigenous Peoples' Rights Act of 1997 (Republic Act No. 8371) sets out the rights and processes relevant to research involving ICCs/IPs, including free and prior informed consent (FPIC) through the National Commission on Indigenous Peoples (NCIP).",
+      refs: ["ipra"]
+    },
     "We did not reproduce sacred chants, prayers or recordings. Stories are retold in our own words from published sources, and each one names the source and, where known, the person who shared it.",
-    "Pictures in this issue are original illustrations. Photographs of people or ceremonies should be added only with the subjects' permission and proper credit.",
+    "Photographs are identified and attributed in their captions and Image credits. A reuse license applies to the image file; it does not by itself establish community endorsement or make one photograph representative of every person or ceremony.",
     "If a community member asks for any content here to be corrected or removed, we will do so."
   ],
 

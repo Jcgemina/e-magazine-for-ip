@@ -83,8 +83,8 @@
   function renderIntro() {
     $("#introLead").textContent = D.intro.lead;
     $("#introBody").innerHTML =
-      D.intro.body.map((p) => `<p>${esc(p)}</p>`).join("") +
-      `<p class="intro__note">${esc(D.intro.note)}</p>`;
+      D.intro.body.map((p, i) => `<p>${esc(p)}${cite(D.intro.bodyRefs && D.intro.bodyRefs[i])}</p>`).join("") +
+      `<p class="intro__note">${esc(D.intro.note)}${cite(D.intro.noteRefs)}</p>`;
     renderMap();
   }
 
@@ -163,8 +163,13 @@
   function photoCreditHTML(credit) {
     if (!credit || typeof credit !== "object") return esc(credit || "");
     return `Photo: <cite>${esc(credit.title)}</cite> · Creator: ${esc(credit.creator)} ·
-      <a href="${esc(credit.licenseUrl)}" target="_blank" rel="noopener noreferrer">${esc(credit.license)}</a> ·
-      <a href="${esc(credit.pageUrl)}" target="_blank" rel="noopener noreferrer">${esc(credit.source)}</a>`;
+      <a href="${esc(credit.pageUrl)}" target="_blank" rel="noopener noreferrer">${esc(credit.source)} file page</a> ·
+      License: <a href="${esc(credit.licenseUrl)}" target="_blank" rel="noopener noreferrer">${esc(credit.license)}</a>`;
+  }
+
+  function photoCaptionHTML(cover) {
+    return `<span class="photo-caption">${esc(cover.caption)}</span>
+      <span class="photo-credit">${photoCreditHTML(cover.credit)}</span>`;
   }
 
   /* ---------- chapters ------------------------------------------------- */
@@ -198,7 +203,7 @@
         ${c.id === "mandaya" && si === 0 ? `
           <figure class="story__weave">
             <img src="${esc(c.cover.src)}" alt="${esc(c.cover.alt)}" loading="lazy" decoding="async" width="1600" height="1000">
-            <figcaption>${photoCreditHTML(c.cover.credit)}</figcaption>
+            <figcaption>${photoCaptionHTML(c.cover)}</figcaption>
           </figure>` : ""}`
       )
       .join("");
@@ -234,7 +239,7 @@
           <p class="timeline__intro">${esc(ch.timeline.intro)}${cite(ch.timeline.refs)}</p>
           <ol class="timeline__list">
             ${ch.timeline.steps
-              .map((s) => `<li><h5>${esc(s.name)}</h5><p>${esc(s.desc)}</p></li>`)
+              .map((s) => `<li><h5>${esc(s.name)}</h5><p>${esc(s.desc)}${cite(s.refs || ch.timeline.refs)}</p></li>`)
               .join("")}
           </ol>
         </section>`
@@ -245,7 +250,7 @@
       <header class="ch-open">
         <figure class="ch-open__media ${c.cover.fit === "contain" ? "ch-open__media--contain" : ""}">
           <img src="${esc(c.cover.src)}" alt="${esc(c.cover.alt)}" loading="lazy" decoding="async" width="1600" height="1000">
-          <figcaption>${photoCreditHTML(c.cover.credit)}</figcaption>
+          <figcaption>${photoCaptionHTML(c.cover)}</figcaption>
         </figure>
         <div class="ch-open__text">
           <p class="ch-open__num">Chapter ${i + 1} of ${all.length}</p>
@@ -267,19 +272,6 @@
       </section>
 
       <p class="ch-statement wrap"><span class="ch-statement__text">${esc(ch.statement)}</span>${cite(ch.statementRefs)}</p>
-
-      <section class="ch-stories wrap" aria-label="Myths and stories">
-        <div class="ch-stories__heading">
-          <h3 class="ch-sub">Myths and stories</h3>
-          <svg class="ch-stories__thread" viewBox="0 0 360 96" aria-hidden="true" focusable="false">
-            <path d="M6 74 C36 74 34 22 68 22 S102 74 136 74 S170 22 204 22 S238 74 272 74 S306 22 340 22"/>
-            <circle cx="6" cy="74" r="4"/>
-            <circle cx="136" cy="74" r="4"/>
-            <circle cx="272" cy="74" r="4"/>
-          </svg>
-        </div>
-        ${stories}
-      </section>
 
       <section class="ch-music" aria-label="Music">
         <svg class="ch-music__melody" viewBox="0 0 820 120" aria-hidden="true" focusable="false">
@@ -309,7 +301,7 @@
         </svg>
         <div class="wrap">
           <h3 class="ch-sub">Music</h3>
-          <p class="ch-music__intro">${esc(ch.music.intro)}</p>
+          <p class="ch-music__intro">${esc(ch.music.intro)}${cite(ch.music.refs)}</p>
           <ul class="inst-grid">${instruments}</ul>
           <div class="ch-music__lower">
             <div>
@@ -320,6 +312,19 @@
           </div>
           ${timeline}
         </div>
+      </section>
+
+      <section class="ch-stories wrap" aria-label="Myths and stories">
+        <div class="ch-stories__heading">
+          <h3 class="ch-sub">Myths and stories</h3>
+          <svg class="ch-stories__thread" viewBox="0 0 360 96" aria-hidden="true" focusable="false">
+            <path d="M6 74 C36 74 34 22 68 22 S102 74 136 74 S170 22 204 22 S238 74 272 74 S306 22 340 22"/>
+            <circle cx="6" cy="74" r="4"/>
+            <circle cx="136" cy="74" r="4"/>
+            <circle cx="272" cy="74" r="4"/>
+          </svg>
+        </div>
+        ${stories}
       </section>
 
       <section class="ch-sig wrap" aria-label="Cultural significance">
@@ -386,7 +391,7 @@
             const v = t.cells[c.id] || "";
             const missing = /not found/i.test(v);
             const verify = /to verify/i.test(v);
-            return `<td data-col="${c.id}" class="${missing ? "is-missing" : ""} ${verify ? "is-verify" : ""}">${esc(v)}</td>`;
+            return `<td data-col="${c.id}" class="${missing ? "is-missing" : ""} ${verify ? "is-verify" : ""}">${esc(v)}${cite(t.refs && t.refs[c.id])}</td>`;
           })
           .join("")}</tr>`
       )
@@ -428,7 +433,11 @@
       })
       .join("");
 
-    $("#protocol").innerHTML = D.protocol.map((p) => `<li>${esc(p)}</li>`).join("");
+    $("#protocol").innerHTML = D.protocol
+      .map((p) => typeof p === "string"
+        ? `<li>${esc(p)}</li>`
+        : `<li>${esc(p.text)}${cite(p.refs)}</li>`)
+      .join("");
     $("#acks").textContent = D.acknowledgments;
     $("#colophon").textContent =
       `Prepared by ${D.meta.group.join(", ")} for ${D.meta.teacher}, ${D.meta.section}, ${D.meta.year}. ` +
@@ -459,9 +468,9 @@
       ...D.communities.map((c, i) => [`#chapter-${c.id}`, `${i + 1}. ${c.name}`]),
       ["#comparison", "Side by side"],
       ["#significance", "Why it matters"],
-      ["#conclusion", "What we learned"],
       ["#image-credits", "Image credits"],
-      ["#references", "References"]
+      ["#references", "References"],
+      ["#conclusion", "Closing note"]
     ];
     $("#menuList").innerHTML = items
       .map(([h, t]) => `<li><a href="${h}">${esc(t)}</a></li>`)
